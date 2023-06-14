@@ -1,0 +1,13 @@
+.posts-container{
+    display: flex;
+    flex-flow: row wrap;
+
+}
+
+.individual-posts{
+    border: 2px solid red;
+}
+
+.post-header{
+    text-align: center;
+}
