@@ -2,6 +2,7 @@ import './Nav.css'
 import { Link } from 'react-router-dom'
 
 export default function Nav({ loggedIn }){
+    console.log(loggedIn)
     return(
         <div className='nav-container'>
             <div className='nav-buttons'>

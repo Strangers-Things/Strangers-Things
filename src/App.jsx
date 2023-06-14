@@ -12,6 +12,13 @@ import './App.css'
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if(token) {
+      setLoggedIn(true)
+    }
+  })
   return (
     <div>
       <Nav loggedIn = {loggedIn}/>
@@ -19,8 +26,8 @@ function App() {
 
       <Routes>
         <Route path='/' element = {<Home />} />
-        <Route path='/posts' element = {<Posts />} />
-        <Route path = '/create-post' element = {<CreatePost />} />
+        <Route path='/posts/*' element = {<Posts />} />
+        <Route path = '/posts/:id' element = {<SinglePost />} />
         {/* <Route path='/login' element = {<Login />} /> */}
         <Route path='/register' element = {<Register loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}/>} />
       </Routes>
