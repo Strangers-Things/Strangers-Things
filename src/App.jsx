@@ -4,6 +4,7 @@ import { fetchPosts } from './API'
 import Home from './components/home/Home'
 import Nav from './components/navbar/Nav'
 import Posts from './components/post/Posts'
+import SinglePost from './components/single-post/SinglePost'
 // import Login from './components/login/Login'
 import Register from './components/register/Register'
 import CreatePost from './components/create-post/CreatePost'
@@ -26,7 +27,7 @@ function App() {
 
       <Routes>
         <Route path='/' element = {<Home />} />
-        <Route path='/posts/*' element = {<Posts />} />
+        <Route path='/posts' element = {<Posts />} />
         <Route path = '/posts/:id' element = {<SinglePost />} />
         {/* <Route path='/login' element = {<Login />} /> */}
         <Route path='/register' element = {<Register loggedIn = {loggedIn} setLoggedIn = {setLoggedIn}/>} />
