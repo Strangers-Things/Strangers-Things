@@ -1,33 +1,51 @@
 import React, { useState } from "react";
-import { loginUser } from "api/authorization";
-export default function Login({ setToken }) {
+import { loginUser } from "../../API";
+import { useNavigate } from "react-router-dom";
+
+export default function Login({ loggedIn, setLoggedIn }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  async function submit(event) {
+    event.preventDefault();
+
+    try {
+      let result = await loginUser(username, password);
+
+      localStorage.setItem("token", result.token);
+      setLoggedIn(true);
+      navigate("/posts");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div>
-      <h2>Login:</h2>
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const result = await loginUser(username, password);
-          localStorage.setItem("token", result.data.token);
-          setToken(result.data.token);
-          setUsername("");
-          setPassword("");
-        }}
-      >
+      <form onSubmit={submit}>
+        <label htmlFor="username">Username:</label>
         <input
+          name="username"
+          type="text"
+          placeholder="Enter Username Here"
           value={username}
-          placeholder="username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          onChange={(event) => {
+            setUsername(event.target.value);
+          }}
+        ></input>
+
+        <label htmlFor="password">Password:</label>
         <input
-          value={password}
-          placeholder="password"
+          name="password"
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Submit</button>
+          placeholder="Enter Password Here"
+          value={password}
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
+        ></input>
+
+        <button type="submit">Login</button>
       </form>
     </div>
   );

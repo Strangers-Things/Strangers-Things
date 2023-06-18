@@ -1,99 +1,86 @@
-import React, { useState, useEffect } from "react";
-// import { createPost } from "../api";
-{/*Returns Create Post Form JSX*/}
-const CreatePost = (props) => {
-  // const [token, setCreateNewPost] = [props.token, props.setCreateNewPost];
-  // const [deliveryCheck, setDeliveryCheck] = useState(false);
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [price, setPrice] = useState("");
-  // return (
-  //   <div className="createPost">
-  //     {/* Create Post Form */}
-  //     <form
-  //       onSubmit={async(event) => {
-  //         //API Call, Create New Post
-  //         event.preventDefault();
-  //         const postObj = {
-  //           title: title,
-  //           description: description,
-  //           price: price,
-  //           willDeliver: deliveryCheck,
-  //         };
-  //         await createPost(postObj, token);
-  //         setCreateNewPost(false);
-  //       }}
-  //       > {/*Create Post Text Boxes*/}
-  //       <div className="createInputs">
-  //         <label htmlFor="title">Title</label>
-  //       <fieldset className="createfieldset">
-  //         <input
-  //         size={'58'}
-  //           minLength={1}
-  //           id="title"
-  //           type="text"
-  //           placeholder="Enter Title"
-  //           value={title}
-  //           onChange={(event) => {
-  //             event.preventDefault();
-  //             setTitle(event.target.value);
-  //           }}
-  //         />
-  //       </fieldset>
-  //         <label htmlFor="description">Description</label>
-  //       <fieldset className="createfieldset" >
-  //         <textarea
-  //         rows={'5'}
-  //         cols="50"
-  //           minLength={1}
-  //           id="description"
-  //           type="text"
-  //           placeholder="Enter Description"
-  //           value={description}
-  //           onChange={(event) => {
-  //             event.preventDefault();
-  //             setDescription(event.target.value);
-  //           }}
-  //         />
-  //       </fieldset>
-  //         <label htmlFor="price">Price</label>
-  //       <fieldset className="createfieldset" >
-  //         <input
-  //         size={'58'}
-  //           minLength={1}
-  //           id="price"
-  //           type="text"
-  //           placeholder="Set Price"
-  //           value={price}
-  //           onChange={(event) => {
-  //             event.preventDefault();
-  //             setPrice(event.target.value);
-  //           }}
-  //         />
-  //       </fieldset>
-  //       {/*Will Deliver Checkbox*/}
-  //       <fieldset className="createfieldset">
-  //         <label  htmlFor="willDeliver">Will You Deliver?</label>
-  //         <input className="checkbox"
-  //           id="willDeliver"
-  //           type="checkbox"
-  //           onChange={(event) => {
-  //             setDeliveryCheck(!deliveryCheck);
-  //           }}
-  //         />
-  //       </fieldset>
-  //       </div>
-  //       {/*Buttons*/}
-  //       <button className="createPostButton" type="submit">Create Post</button>
-  //       <button className="cancelButton"
-  //         onClick={() => {
-  //           setCreateNewPost(false);
-  //         }}
-  //       >
-  //         Cancel
-  //       </button>
-  //     </form>
-  //   </div>
-  // );
-};
-export default CreatePost;
+import React, { useState } from "react";
+import { createPost } from "../../API";
+
+export default function CreatePost() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [location, setLocation] = useState("");
+  const [willDeliver, setWillDeliver] = useState(false);
+
+  async function submit(event) {
+    event.preventDefault();
+
+    try {
+      let result = await createPost(
+        localStorage.getItem("token"),
+        title,
+        description,
+        price,
+        location,
+        willDeliver
+      );
+      console.log(result)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return (
+    <div>
+      <form onSubmit={submit}>
+        <fieldset>
+          <legend>Create a Post</legend>
+
+          <label htmlFor="title">Title:</label>
+          <input
+            name="title"
+            type="text"
+            placeholder="Title Here"
+            value={title}
+            onChange={(event) => {
+              setTitle(event.target.value);
+            }}
+          ></input>
+
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            rows={"5"}
+            cols={"50"}
+            placeholder="Enter Description Here"
+            value={description}
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
+          ></textarea>
+
+          <label htmlFor="price">Price:</label>
+          <input
+            name="price"
+            type="number"
+            placeholder="$$$"
+            value={price}
+            onChange={(event) => {
+              setPrice(event.target.value);
+            }}
+          ></input>
+
+          <label htmlFor="location">Location:</label>
+          <input
+            name="location"
+            type="text"
+            placeholder="Location Here"
+            value={location}
+            onChange={(event) => {
+              setLocation(event.target.value);
+            }}
+          ></input>
+
+          <button type="submit">Create</button>
+        </fieldset>
+      </form>
+    </div>
+  );
+}
