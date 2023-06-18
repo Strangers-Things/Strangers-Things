@@ -1,7 +1,7 @@
 import "./Nav.css";
 import { Link } from "react-router-dom";
 
-export default function Nav({ loggedIn }) {
+export default function Nav({ loggedIn, setLoggedIn }) {
   return (
     <div className="nav-container">
       <div className="nav-buttons">
@@ -19,6 +19,14 @@ export default function Nav({ loggedIn }) {
             <Link to="/profile">
               <button className="nav-single-button">Profile</button>
             </Link>
+            <button
+              onClick={() => {
+                setLoggedIn(false);
+                localStorage.removeItem("token");
+              }}
+            >
+              Logout
+            </button>
           </>
         ) : (
           <>
